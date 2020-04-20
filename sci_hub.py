@@ -167,8 +167,9 @@ def move_file(doi, args):
         name = doi.replace(" ", "_").replace("/", "_") + ".pdf"
         if os.path.exists("./Downloads/wuieobgefn.pdf"):
             if os.name == "nt":
-                os.rename(os.getcwd()+"/Downloads/wuieobgefn.pdf",
-                          os.getcwd()+"/Downloads/" + name)
+                print("CWD "+os.getcwd())
+                os.rename(os.path.join(os.getcwd(), "Downloads", "wuieobgefn.pdf"),
+                          os.path.join(os.getcwd(), 'Downloads', name))
             else:
                 os.rename("./Downloads/wuieobgefn.pdf", "./Downloads/" + name)
             print("Files saved at ./Downloads/" + name)

@@ -49,7 +49,12 @@ args = parser.parse_args()
 def create_dictionary(filename):
     my_data = pandas.read_csv(filename, sep='\t', index_col=False)
     list_of_dicts = [item for item in my_data.T.to_dict().values()]
-    return list_of_dicts
+    lt = []
+    for item in list_of_dicts:
+        if item["DI"] == item["DI"]:
+            lt.append({"DI": item["DI"]})
+    return lt
+
 
 # Get Sci-Hub URL from Google
 
@@ -159,7 +164,7 @@ def download_paper(mirror, args):
 # Rename and move
 def move_file(doi, args):
     if doi:
-        name = doi.replace("/", "_") + ".pdf"
+        name = doi.replace(" ", "_") + ".pdf"
         if os.path.exists("./Downloads/wuieobgefn.pdf"):
             os.rename("./Downloads/wuieobgefn.pdf", "./Downloads/" + name)
             print("Files saved at ./Downloads/" + name)
@@ -197,6 +202,6 @@ def main():
                 move_file(target["TI"], args)
 
 
-main()
+# main()
 print("\nThanks for using.\n")
 quit()

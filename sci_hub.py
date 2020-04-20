@@ -17,6 +17,8 @@ import platform
 import re
 import time
 import webbrowser as wbb
+import pandas
+
 
 # Python 2.x incompatibility
 if int(platform.python_version_tuple()[0]) < 3:
@@ -37,20 +39,30 @@ import requests  # noqa: E402
 # Define command line arguments
 parser = argparse.ArgumentParser(description="Sci-Hub downloader: Utility to \
                                              download from Sci-Hub")
-parser.add_argument("target",
+parser.add_argument("targetlist",
                     help="URL/DOI to download PDF", type=str)
 parser.add_argument("--view", help="Open article in browser for reading",
                     action="store_true")
 args = parser.parse_args()
 
+
+def create_dictionary(filename):
+    my_data = pandas.read_csv(filename, sep='\t', index_col=False)
+    list_of_dicts = [item for item in my_data.T.to_dict().values()]
+    return list_of_dicts
+
 # Get Sci-Hub URL from Google
+
+
 def get_url():
     print("Trying primary method.")
     # Use where is sci hub now api service
-    response = requests.get("https://whereisscihub.now.sh/api")
+    response = requests.get("https://sci-hub.now.sh/api")
     return response.json()
 
 # Alterane URL from Twitter
+
+
 def try_alternate():
     print("Trying alternate method.")
     # Query twitter page of Sci-Hub
@@ -133,7 +145,7 @@ def download_paper(mirror, args):
         print("Downloaded {} MB\n".format(size))
         with open("./Downloads/wuieobgefn.pdf", "wb") as f:
             f.write(response.content)
-        f.close()
+        # f.close()
     # Check if firefox exists and open download link
     # in firefox
     elif re.match("text/html", response.headers['content-type']):
@@ -165,21 +177,24 @@ def main():
             print("Try after some time")
             quit()
     else:
-        url = sci_hub + args.target
-        print("Extracting download links...")
-        doi, mirror = get_links(url)
-        if not mirror:
-            print("Download link not available")
-            print("Please try after sometime")
-            print("\nAlso try prepending ' http://dx.doi.org/' to input")
-            print("If it still doesn't work raise an issue at " +
-                  "https://github.com/gadilashashank/Sci-Hub/issues")
-            time.sleep(10)
-            quit()
-        else:
-            print("Downloading paper...")
-            download_paper(mirror, args)
-            move_file(doi, args)
+        ls = create_dictionary(args.targetlist)
+        targetlist = [{"DI": item["DI"], "TI": item["TI"]} for item in ls]
+        for target in targetlist:
+            url = sci_hub + target["DI"]
+            print("Extracting download links...")
+            doi, mirror = get_links(url)
+            if not mirror:
+                print("Download link not available")
+                print("Please try after sometime")
+                print("\nAlso try prepending ' http://dx.doi.org/' to input")
+                print("If it still doesn't work raise an issue at " +
+                      "https://github.com/tumerorkun/Sci-Hub/issues")
+                time.sleep(10)
+                quit()
+            else:
+                print("Downloading paper...")
+                download_paper(mirror, args)
+                move_file(target["TI"], args)
 
 
 main()

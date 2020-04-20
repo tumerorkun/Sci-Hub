@@ -13,10 +13,9 @@
 This application is for educational purpose only. I do not take responsibility
 of what you choose to do with this application.
 
-
 ## About
 
-*Sci-Hub downloader* is a command line wrapper of Sci-Hub written in Python. You can use the script to download research articles from your terminal itself.  
+_Sci-Hub downloader_ is a command line wrapper of Sci-Hub written in Python. You can use the script to download research articles from your terminal itself.
 
 Hope you find it useful.
 
@@ -26,10 +25,9 @@ Hope you find it useful.
 
 This application is not designed/tested to run on Windows machines natively . So if you are using Windows either you need to modify the script to run natively, or in a Virtual Machine with any Linux OS, installed or on Windows Subsystem for Linux.
 
-
 ### GNU/Linux
 
-If you are using a Linux system, simply run the *configure.sh*, which is a bash script
+If you are using a Linux system, simply run the _configure.sh_, which is a bash script
 that tries to install all the dependencies. Currently, this script can
 automatically configure systems which use **apt, dnf, pacman or slackpkg**
 as their package managers.
@@ -43,22 +41,24 @@ Otherwise refer REQUIREMENTS.md file and manually install the mentioned dependen
 ### MacOS
 
 Run the following commands
-* Install Homebrew
+
+-   Install Homebrew
 
 ```md
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/usr/bin/ruby -e "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-* Python 3.x
+-   Python 3.x
 
 ```md
 brew update
 brew install python3
 ```
+
 pip3 is a requirement but I have no clue if the mentioned command works. A quick
 search should help.
 
-* python3-pip
+-   python3-pip
 
 ```md
 sudo easy_install python3-pip
@@ -68,27 +68,29 @@ Next run configure.sh file or the following command. I'm not sure if sudo is
 required.
 
 ```md
-pip3 install requests beautifulsoup4 lxml
+pip3 install requests beautifulsoup4 lxml pandas
 ```
 
-Regardless of OS, run the *test.py* file as mentioned below to ensure that
+Regardless of OS, run the _test.py_ file as mentioned below to ensure that
 everything works properly.
 Make sure you can spot the success message in the output.
 
 Sample output
+
 ```md
-$ python3 test.py https://google.com
+\$ python3 test.py https://google.com
 This is a test file and does nothing.
 
-**************************************************
+---
+
 YOUR TEST IS ALREADY SUCCESSFUL
 The next output is to satisfy Codacy :/
 
 You can safely ignore the output next
-**************************************************
+
+---
 
 [SOME DEBUG OUTPUT COMES HERE]
-
 ```
 
 If you don't get a similar success message as shown above then try to solve the
@@ -105,7 +107,7 @@ If you feel any such warning is a mistake, please create an issue
 An example warning
 
 ```md
-$ python2 sci_hub.py
+\$ python2 sci_hub.py
 This script is NOT compatible with Python 2.x
 Use this command to run the script:
 
@@ -117,17 +119,17 @@ python3 sci_hub.py
 After ensuring everything is set, fire up sci_hub.py
 
 ```md
-$ python3 sci_hub.py -h
-usage: sci_hub.py [-h] [--view] target
+\$ python3 sci_hub.py -h
+usage: sci_hub.py [-h][--view] targetlist
 
 Sci-Hub downloader: Utility to download from Sci-Hub
 
 positional arguments:
-  target      URL/DOI to download PDF
+targetlist tab delimited csv file which includes DOI as DI info and TITLE as TI to download pdf
 
 optional arguments:
-  -h, --help  show this help message and exit
-  --view      Open article in browser for reading
+-h, --help show this help message and exit
+--view Open article in browser for reading
 ```
 
 ### Target
@@ -135,8 +137,8 @@ optional arguments:
 This is either the complete URL or the DOI of the paper to be downloaded.
 
 ```md
-Correct URL input 	: https://ieeexplore.ieee.org/document/1695678/
-Incorrect URL input	: ieeexplore.ieee.org/document/1695678/
+Correct URL input : https://ieeexplore.ieee.org/document/1695678/
+Incorrect URL input : ieeexplore.ieee.org/document/1695678/
 ```
 
 DOI is case-insensitive
@@ -147,10 +149,9 @@ Correct DOI : 10.1109/ms.1987.229797
 ```
 
 Example usage
+
 ```md
-$ python3 sci_hub.py 10.1109/MS.1987.229797
-$ python3 sci_hub.py https://ieeexplore.ieee.org/document/1695678/
-$ python3 sci_hub.py --view 10.1109/MS.1987.229797
+\$ python3 sci_hub.py savedrecs.csv
 ```
 
 ### -h
@@ -184,24 +185,23 @@ Files saved at ./Downloads/10.1007_978-3-540-74496-2_36.pdf
 
 ### Updating to newer versions
 
-A simple ```git pull``` from the cloned repository should do the trick.
-
-
+A simple `git pull` from the cloned repository should do the trick.
 
 ## Known issues
 
 Though the script tries its best in doing its job is has few issues/limitations.
 These are mentioned here.
 
-* Unexpected redirects
-  * Sometimes sci-hub redirects requests to libgen and can lead to unexpected
-	  errors.
-  * If input was a URL, try by inputting the DOI
-  * If the input was a DOI, then try prepending "http://dx.doi.org/" to the DOI.
+-   Unexpected redirects
+    -   Sometimes sci-hub redirects requests to libgen and can lead to unexpected
+        errors.
+    -   If input was a URL, try by inputting the DOI
+    -   If the input was a DOI, then try prepending "http://dx.doi.org/" to the DOI.
 
 An example of a failure due to redirection to libgen
+
 ```md
-$ python3 sci_hub.py 10.1007/978-3-540-74496-2_36
+\$ python3 sci_hub.py 10.1007/978-3-540-74496-2_36
 Trying primary method.
 URL from primary method is: https://sci-hub.tw/
 
@@ -216,8 +216,9 @@ Please try after sometime
 ```
 
 Success by altering target
+
 ```md
-$ python3 sci_hub.py http://dx.doi.org/10.1007/978-3-540-74496-2_36
+\$ python3 sci_hub.py http://dx.doi.org/10.1007/978-3-540-74496-2_36
 Trying primary method.
 URL from primary method is: https://sci-hub.tw/
 
@@ -236,8 +237,7 @@ Files saved at ./Downloads/10.1007_978-3-540-74496-2_36.pdf
 Thanks for using.
 ```
 
-* Any issue that did not arise during development/testing.
-
+-   Any issue that did not arise during development/testing.
 
 ## In case of issues with the script
 
@@ -245,8 +245,8 @@ This script is **NOT** meant to be used for python version 2.x
 
 The scripts have been developed and thoroughly tested on the following platforms
 
-* An Ubuntu 16.04 LTS machine running Python 3.5.2
-* Arch Linux machine running Python 3.6.6 and 3.7.0
+-   An Ubuntu 16.04 LTS machine running Python 3.5.2
+-   Arch Linux machine running Python 3.6.6 and 3.7.0
 
 Thus it is assumed that the scripts should function properly on python 3.5+
 provided the dependencies are proper. Functioning in Python 3 versions below

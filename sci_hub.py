@@ -201,6 +201,6 @@ def main():
                 move_file(target["TI"], args)
 
 
-# main()
+main()
 print("\nThanks for using.\n")
 quit()

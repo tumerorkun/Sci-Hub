@@ -52,7 +52,7 @@ def create_dictionary(filename):
     lt = []
     for item in list_of_dicts:
         if item["DI"] == item["DI"]:
-            lt.append({"TI": item["TI"], "DI": item["DI"]})
+            lt.append({"AU": item["AU"], "TI": item["TI"], "DI": item["DI"]})
     return lt
 
 
@@ -194,7 +194,9 @@ def main():
                 print("If it still doesn't work raise an issue at " +
                       "https://github.com/tumerorkun/Sci-Hub/issues")
                 time.sleep(10)
-                quit()
+                print("NOT FOUND ON SCI-HUB -> " +
+                      target["AU"] + " - " + target["TI"])
+                continue
             else:
                 print("Downloading paper...")
                 download_paper(mirror, args)

@@ -164,7 +164,7 @@ def download_paper(mirror, args):
 # Rename and move
 def move_file(doi, args):
     if doi:
-        name = doi.replace(" ", "_") + ".pdf"
+        name = doi.replace(" ", "_").replace("/", "_") + ".pdf"
         if os.path.exists("./Downloads/wuieobgefn.pdf"):
             os.rename("./Downloads/wuieobgefn.pdf", "./Downloads/" + name)
             print("Files saved at ./Downloads/" + name)

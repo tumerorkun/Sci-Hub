@@ -164,7 +164,8 @@ def download_paper(mirror, args):
 # Rename and move
 def move_file(doi, args):
     if doi:
-        name = doi.replace(" ", "_").replace("/", "_") + ".pdf"
+        name = doi.replace(" ", "_").replace(
+            "/", "_").replace("-", "_").replace(":", "_") + ".pdf"
         if os.path.exists("./Downloads/wuieobgefn.pdf"):
             if os.name == "nt":
                 print("CWD "+os.getcwd())

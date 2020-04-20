@@ -52,7 +52,7 @@ def create_dictionary(filename):
     lt = []
     for item in list_of_dicts:
         if item["DI"] == item["DI"]:
-            lt.append({"DI": item["DI"]})
+            lt.append({"TI": item["TI"], "DI": item["DI"]})
     return lt
 
 
@@ -182,8 +182,7 @@ def main():
             print("Try after some time")
             quit()
     else:
-        ls = create_dictionary(args.targetlist)
-        targetlist = [{"DI": item["DI"], "TI": item["TI"]} for item in ls]
+        targetlist = create_dictionary(args.targetlist)
         for target in targetlist:
             url = sci_hub + target["DI"]
             print("Extracting download links...")
